@@ -20,13 +20,7 @@ int main() {
     ifstream todo;
     todo.open("resources/todo.txt");
     vector<string> thingsToDo;
-    if (todo.is_open()) {
-        string line;
-        while (getline(todo, line)) {
-            thingsToDo.push_back(line);
-        }
-        todo.close();
-    }
+
 
     float screenWidth = 1600;
     float screenHeight = 1200;
@@ -158,35 +152,25 @@ int main() {
                     }
                 }
             }
-            if (iToDelete > 0){
-                cout << "pretend it deleted" << "\n";
-                //This stuff works with the file but causes code to break
-//                string filename = "resources/todo.txt";
-//                ifstream infile(filename);
-//                vector<string> lines;
-//                string line;
-//
-//                while (getline(infile, line)) {
-//                    lines.push_back(line);
-//                }
-//                infile.close();
-//                lines.erase(lines.begin() + iToDelete - 1);
-//
-//                ofstream outfile(filename);
-//                for (string line : lines) {
-//                    outfile << line << endl;
-//                }
-//                outfile.close();
-//                thingsToDo.erase(thingsToDo.begin() + iToDelete);
-                iToDelete = 0;
-            }
         }
 
         window.clear(background);
 
         //This outputs the users list
-        //INEFFIECIENT NEEDS A CHANGE
+        //INEFFIECIENT NEEDS A CHANGE BECAUSE OF REPOPULATION
+        //The WAY IT WORKS RN IS I USE THE STRINGS READ FROM OG FILE
+        //AND PUT THEM INTO A NEW VECTOR OF TEXTS TO DISPLAY
+        //IF ONE OF THEM IS TO BE DELETED IT IS DELETED FROM BOTH VECTORS AND THE FILE
+        //IT IS THEN DRAWN
         int i = 1;
+        if (todo.is_open()) {
+            string line;
+            while (getline(todo, line)) {
+                thingsToDo.push_back(line);
+            }
+
+        }
+
         for (auto element : thingsToDo){
             string toOut = to_string(i);
             toOut += ". ";
@@ -198,6 +182,27 @@ int main() {
             toDoStrings.push_back(temp);
             i++;
         }
+        if (iToDelete > 0){
+                string filename = "resources/todo.txt";
+                ifstream infile(filename);
+                vector<string> lines;
+                string line;
+
+                while (getline(infile, line)) {
+                    lines.push_back(line);
+                }
+                infile.close();
+                lines.erase(lines.begin() + iToDelete - 1);
+
+                ofstream outfile(filename);
+                for (string line : lines) {
+                    outfile << line << endl;
+                }
+                outfile.close();
+                thingsToDo.erase(thingsToDo.begin() + iToDelete - 1);
+                toDoStrings.erase(toDoStrings.begin() + iToDelete - 1);
+            iToDelete = 0;
+        }
         for (auto element : toDoStrings){
             auto elementLoc = element.getGlobalBounds();
             if (elementLoc.contains(mouseX,mouseY)){
@@ -208,6 +213,7 @@ int main() {
             }
             window.draw(element);
         }
+        toDoStrings.clear();
         //THIS COULD USE OPTIMIZATION
         if (mode == "w"){
             weekly.setFillColor(sf::Color::White);
@@ -232,6 +238,6 @@ int main() {
         window.draw(name);
         window.display();
     }
-
+    todo.close();
     return 0;
 }

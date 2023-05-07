@@ -1,5 +1,5 @@
-Hey
-This is a todo list
-needs alot of work
-but give it some time
-and itll work nice
+Work on showing a weekly todo
+^ Having it open in another file would be better
+for organization
+Fixing Bugs
+Optimizing delete functionality
