@@ -7,12 +7,14 @@
 
 using namespace std;
 
-//THINGS TO CHANGE:
-//1.SPRITE PNGS AND SIZES
-//2.BACKGROUND COLOR
-//3.FIND A BETTER FONT
-//4.FIX POSITIONS AND SIZES
-//5.NEEDS A CURSOR TO SHOW WHERE USER IS TYPING
+//THINGS TO CHANGE/Fix:
+//1.SPRITE PNGS AND SIZES REFORMATTING
+//2.NEEDS A CURSOR TO SHOW WHERE USER IS TYPING (Might be something with font)
+//3.DELETE FUNCTIONALITY
+//4.NEEDS TO OPEN NEW WINDOW WHEN W IS PRESSED ON SCREEN
+//5.FIGURE OUT A WAY TO STRUCTURE IT TO SEE A WEEKLY VIEW WITH ALL DAILY TO DO LISTS
+//so currently it is only on a daily basis i would like to just make it so you
+//can see the week and itll be empty ofc
 int main() {
     //Startup reads to do list
     ifstream todo;
