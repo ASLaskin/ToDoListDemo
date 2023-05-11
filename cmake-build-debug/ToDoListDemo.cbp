@@ -85,6 +85,12 @@
 		<Unit filename="/Users/andrewlaskin/CLionProjects/ToDoListDemo/main.cpp">
 			<Option target="ToDoListDemo"/>
 		</Unit>
+		<Unit filename="/Users/andrewlaskin/CLionProjects/ToDoListDemo/txtEditor.cpp">
+			<Option target="ToDoListDemo"/>
+		</Unit>
+		<Unit filename="/Users/andrewlaskin/CLionProjects/ToDoListDemo/txtEditor.h">
+			<Option target="ToDoListDemo"/>
+		</Unit>
 		<Unit filename="/Users/andrewlaskin/CLionProjects/ToDoListDemo/weekly.cpp">
 			<Option target="ToDoListDemo"/>
 		</Unit>

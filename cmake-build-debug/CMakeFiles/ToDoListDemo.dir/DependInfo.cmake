@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/andrewlaskin/CLionProjects/ToDoListDemo/main.cpp" "CMakeFiles/ToDoListDemo.dir/main.cpp.o" "gcc" "CMakeFiles/ToDoListDemo.dir/main.cpp.o.d"
+  "/Users/andrewlaskin/CLionProjects/ToDoListDemo/txtEditor.cpp" "CMakeFiles/ToDoListDemo.dir/txtEditor.cpp.o" "gcc" "CMakeFiles/ToDoListDemo.dir/txtEditor.cpp.o.d"
   "/Users/andrewlaskin/CLionProjects/ToDoListDemo/weekly.cpp" "CMakeFiles/ToDoListDemo.dir/weekly.cpp.o" "gcc" "CMakeFiles/ToDoListDemo.dir/weekly.cpp.o.d"
   )
 

@@ -4,23 +4,24 @@
 #include <fstream>
 #include <vector>
 #include "weekly.h"
+#include "txtEditor.h"
 
 using namespace std;
 
 //THINGS TO CHANGE/Fix:
 //1.SPRITE PNGS AND SIZES REFORMATTING
 //2.NEEDS A CURSOR TO SHOW WHERE USER IS TYPING (Might be something with font)
-//3.DELETE FUNCTIONALITY
 //4.NEEDS TO OPEN NEW WINDOW WHEN W IS PRESSED ON SCREEN
 //5.FIGURE OUT A WAY TO STRUCTURE IT TO SEE A WEEKLY VIEW WITH ALL DAILY TO DO LISTS
 //so currently it is only on a daily basis i would like to just make it so you
 //can see the week and itll be empty ofc
+
+//TRY PUTTING THE TEXT SPRITE VECTOR CREATOR INTO TEXT EDITOR TO CLEAN MORE CODE
 int main() {
     //Startup reads to do list
     ifstream todo;
     todo.open("resources/todo.txt");
     vector<string> thingsToDo;
-
 
     float screenWidth = 1600;
     float screenHeight = 1200;
@@ -28,9 +29,7 @@ int main() {
 
     //Sprites and such
     sf::Texture toDo;
-    if (!toDo.loadFromFile("resources/addToDo.png")) {
-        cout << "Failed";
-    }
+    toDo.loadFromFile("resources/addToDo.png");
     sf::Sprite toDoButton(toDo);
     toDoButton.setPosition((screenWidth/ 3) - 400, (screenHeight / 2) + 300);
     auto toDoLoc = toDoButton.getGlobalBounds();
@@ -45,9 +44,7 @@ int main() {
     auto nameLoc = name.getGlobalBounds();
 
     sf::Texture deleterTex;
-    if (!deleterTex.loadFromFile("resources/delete.png")) {
-        cout << "Failed";
-    }
+    deleterTex.loadFromFile("resources/delete.png");
     sf::Sprite deleter(deleterTex);
     deleter.setPosition(0,0);
 
@@ -55,7 +52,6 @@ int main() {
     sf::Text daily("D",font,70);
     sf::Text weekly("W",font,70);
     sf::Text monthly("M",font,70);
-
     daily.setStyle(sf::Text::Bold);
     weekly.setStyle(sf::Text::Bold);
     monthly.setStyle(sf::Text::Bold);
@@ -65,13 +61,9 @@ int main() {
     daily.setFillColor(sf::Color::Black);
     weekly.setFillColor(sf::Color::Black);
     monthly.setFillColor(sf::Color::Black);
-
-
-
     auto dLoc = daily.getGlobalBounds();
     auto wLoc = weekly.getGlobalBounds();
     auto mLoc = monthly.getGlobalBounds();
-
 
     //VARIABLES THAT ARE NEEDED IN WHILE LOOP AND DEFAULTS
     bool typeMode = false;
@@ -83,6 +75,8 @@ int main() {
     int mouseY = 0;
     string mode = "d";
     int iToDelete = 0;
+    txtEditor textManager;
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -107,7 +101,7 @@ int main() {
                             cout << "input is empty" << "\n";
                         }
                         else{
-                            thingsToDo.push_back(playerInput);
+                            textManager.addTex(playerInput);
                         }
                     } else if (dLoc.contains(mouseX,mouseY)){
                         mode = "d";
@@ -121,8 +115,6 @@ int main() {
                         iToDelete = mouseY - 100;
                         iToDelete /= 100;
                     }
-
-
                 }
             }
             if (typeMode) {
@@ -143,7 +135,7 @@ int main() {
                     }
                     if (sf::Keyboard::isKeyPressed((sf::Keyboard::Enter))) {
                         if (!playerInput.empty()){
-                            thingsToDo.push_back(playerInput);
+                            textManager.addTex(playerInput);
                         }
                     }
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
@@ -153,56 +145,25 @@ int main() {
                 }
             }
         }
-
-        window.clear(background);
-
-        //This outputs the users list
-        //INEFFIECIENT NEEDS A CHANGE BECAUSE OF REPOPULATION
-        //The WAY IT WORKS RN IS I USE THE STRINGS READ FROM OG FILE
-        //AND PUT THEM INTO A NEW VECTOR OF TEXTS TO DISPLAY
-        //IF ONE OF THEM IS TO BE DELETED IT IS DELETED FROM BOTH VECTORS AND THE FILE
-        //IT IS THEN DRAWN
         int i = 1;
-        if (todo.is_open()) {
-            string line;
-            while (getline(todo, line)) {
-                thingsToDo.push_back(line);
-            }
-
-        }
-
-        for (auto element : thingsToDo){
-            string toOut = to_string(i);
-            toOut += ". ";
-            toOut += element;
-
-            sf::Text temp(toOut,font,50);
+        thingsToDo = textManager.getVector();
+        for (int j = 0; j < thingsToDo.size(); j++){
+            sf::Text temp(thingsToDo[j],font,50);
             temp.setFillColor(sf::Color::Black);
             temp.setPosition(screenWidth / 3 - 300,((screenHeight / 10) + (i * 100)));
             toDoStrings.push_back(temp);
             i++;
         }
+
+        window.clear(background);
+
+
         if (iToDelete > 0){
-                string filename = "resources/todo.txt";
-                ifstream infile(filename);
-                vector<string> lines;
-                string line;
-
-                while (getline(infile, line)) {
-                    lines.push_back(line);
-                }
-                infile.close();
-                lines.erase(lines.begin() + iToDelete - 1);
-
-                ofstream outfile(filename);
-                for (string line : lines) {
-                    outfile << line << endl;
-                }
-                outfile.close();
-                thingsToDo.erase(thingsToDo.begin() + iToDelete - 1);
-                toDoStrings.erase(toDoStrings.begin() + iToDelete - 1);
+            textManager.removeTex(iToDelete);
+            toDoStrings.erase(toDoStrings.begin() + iToDelete - 1);
             iToDelete = 0;
         }
+
         for (auto element : toDoStrings){
             auto elementLoc = element.getGlobalBounds();
             if (elementLoc.contains(mouseX,mouseY)){

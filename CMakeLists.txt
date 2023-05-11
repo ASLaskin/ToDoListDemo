@@ -4,7 +4,7 @@ project(ToDoListDemo)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES main.cpp)
-add_executable(ToDoListDemo main.cpp weekly.cpp weekly.h)
+add_executable(ToDoListDemo main.cpp weekly.cpp weekly.h txtEditor.cpp txtEditor.h)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

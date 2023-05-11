@@ -2,4 +2,5 @@ Work on showing a weekly todo
 ^ Having it open in another file would be better
 for organization
 Fixing Bugs
-Optimizing delete functionality
+The delete and add to file
+^are in a new file

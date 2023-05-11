@@ -153,6 +153,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToDoListDemo.dir/build.make CMakeFiles/ToDoListDemo.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+txtEditor.o: txtEditor.cpp.o
+.PHONY : txtEditor.o
+
+# target to build an object file
+txtEditor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToDoListDemo.dir/build.make CMakeFiles/ToDoListDemo.dir/txtEditor.cpp.o
+.PHONY : txtEditor.cpp.o
+
+txtEditor.i: txtEditor.cpp.i
+.PHONY : txtEditor.i
+
+# target to preprocess a source file
+txtEditor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToDoListDemo.dir/build.make CMakeFiles/ToDoListDemo.dir/txtEditor.cpp.i
+.PHONY : txtEditor.cpp.i
+
+txtEditor.s: txtEditor.cpp.s
+.PHONY : txtEditor.s
+
+# target to generate assembly for a file
+txtEditor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToDoListDemo.dir/build.make CMakeFiles/ToDoListDemo.dir/txtEditor.cpp.s
+.PHONY : txtEditor.cpp.s
+
 weekly.o: weekly.cpp.o
 .PHONY : weekly.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... txtEditor.o"
+	@echo "... txtEditor.i"
+	@echo "... txtEditor.s"
 	@echo "... weekly.o"
 	@echo "... weekly.i"
 	@echo "... weekly.s"
