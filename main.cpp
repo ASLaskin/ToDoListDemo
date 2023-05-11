@@ -3,6 +3,10 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <ctime>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
 #include "weekly.h"
 #include "txtEditor.h"
 
@@ -25,7 +29,9 @@ int main() {
 
     float screenWidth = 1600;
     float screenHeight = 1200;
-    sf::Color background(255, 192, 203);
+    //pink 255, 192, 203
+    //blue 204, 225, 242
+    sf::Color background(204, 225, 242);
 
     //Sprites and such
     sf::Texture toDo;
@@ -65,6 +71,10 @@ int main() {
     auto wLoc = weekly.getGlobalBounds();
     auto mLoc = monthly.getGlobalBounds();
 
+    sf::Text clock("",font,100);
+    clock.setPosition(screenWidth/2 - 185,screenHeight / 8 - 150);
+    clock.setFillColor(sf::Color::Black);
+    clock.setStyle(sf::Text::Bold | sf::Text::Underlined | sf::Text:: Italic);
     //VARIABLES THAT ARE NEEDED IN WHILE LOOP AND DEFAULTS
     bool typeMode = false;
     string playerInput = "";
@@ -197,7 +207,23 @@ int main() {
 
         window.draw(toDoButton);
         window.draw(name);
+
+        //THIS DRAWS THE CLOCK
+        auto now = chrono::system_clock::now();
+        time_t current_time = chrono::system_clock::to_time_t(now);
+        tm* local_time = std::localtime(&current_time);
+        stringstream time_ss;
+        time_ss << put_time(local_time, "%H:%M:%S");
+        string time_str = time_ss.str();
+        clock.setString(time_str);
+        window.draw(clock);
+
         window.display();
+
+
+
+
+
     }
     todo.close();
     return 0;
